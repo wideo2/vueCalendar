@@ -1,0 +1,110 @@
+<template>
+    <div class="day" @click="openPopup">
+        <div class="date">
+            <span v-if="day.date.getDate() == current.getDate()&&day.date.getMonth() == current.getMonth()" class="today">{{day.date.getDate()}}</span>
+            <span v-else="" class="number">{{day.date.getDate()}}</span>
+            
+            <span class="month">({{day.date.getMonth() + 1}}월)</span>
+        </div>
+        <div  class="list">
+            <transition-group name="fade">
+            <div v-bind:key="idx" class="item" v-for="(todo, idx) in day.list" @click.stop="openEditPopup(idx)">{{todo.name}}</div>
+            </transition-group>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name:'day',
+        props:['day'],
+        data(){
+            return {
+                current: null,
+            }
+        }, 
+        created() {
+         let now = new Date();
+         this.current = now;
+        },
+        methods:{
+            
+            openPopup(){
+                this.$emit("open");
+            },
+            openEditPopup(idx){
+                this.$emit("edit", event, idx, this.day.idx);
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    .day {
+        width:100%;
+        height:100%;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        box-shadow: 0px 0px 0px 2px #fff;
+        
+    }
+
+    .date {
+        padding:8px;
+    }
+    .today{
+        font-size: 25px;
+        padding: 2px 7px;
+        font-weight: bold;
+        color: rgb(157, 156, 236);
+        border-radius: 10px;
+        background-color: #fff;
+    }
+    .number {
+        font-size:25px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .month {
+        font-size:15px;
+        color:rgb(255, 255, 255);
+    }
+   
+    .item {
+        background-color: rgb(71, 51, 255);
+        color:#fff;
+        border-radius: 0.25rem;
+        padding:0.2rem 0.25rem;
+        margin:4px;
+        transition: all 5s;
+    }
+    .list{
+        max-height: 62px;
+        overflow: hidden;
+    }
+    .list:hover{
+        animation: size 10s;
+    }
+    @keyframes size{
+        0%{
+            max-height: 62px;
+        }
+        50%{
+            max-height: 1000px;
+        }
+        100%{
+            max-height: none;
+        }
+    }
+    .fade-enter,.fade-leave-to{
+        opacity: 0;
+    }
+    .fade-leave,.fade-enter-to{
+        opacity: 1;
+    }
+    .fade-enter-active,.fade-leave-active{
+        transition: all 5s;
+    }
+</style>
