@@ -9,7 +9,7 @@
       <button  @click="next">&gt;</button>
     </div>
     <div class="calendar">
-      <transition-group name="fade">
+      <transition-group name="upFade" >
       <div v-for="week in dayList" class="week" v-bind:key="week">
         <day
           v-for="day in week"
@@ -171,7 +171,7 @@ body{
   background-color:rgb(157, 156, 236); 
 }
 .month-label {  
-  margin-top: 15px;
+  margin-top: 5px;
   display: flex;
   align-items: center;
   font-size: 45px;
@@ -225,15 +225,31 @@ body{
   grid-gap: 10px;
 }
 
-.fade-enter-active,.fade-leave-active {
+.upFade-enter-active{
   transition: opacity 1s;
 }
-.fade-enter,.fade-leave-to  /* .fade-leave-active below version 2.1.8 */ {
+.upFade-leave-active{
+  transition: opacity 2s;
+  transform: translateY(-650px);
+}
+.upFade-enter,.upFade-leave-to{
   opacity: 0;
 }
-.fade-enter-to,.fade-leave{
+
+.upFade-enter-to
+,.upFade-leave{
   opacity: 1;
 }
+.fade-enter,.fade-leave-to{
+        opacity: 0;
+    }
+    .fade-leave,.fade-enter-to{
+        opacity: 1;
+    }
+    .fade-enter-active,.fade-leave-active{
+        transition: opacity .6s;
+
+    }
 .form-group > textarea {
   height: 150px;
 }

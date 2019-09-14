@@ -1,9 +1,9 @@
 <template>
     <div class="day" @click="openPopup">
         <div class="date">
-            <span v-if="day.date.getDate() == current.getDate()&&day.date.getMonth() == current.getMonth()" class="today">{{day.date.getDate()}}</span>
-            <span v-else="" class="number">{{day.date.getDate()}}</span>
             
+            <span v-if="day.date.getDate() == current.getDate()&&day.date.getMonth() == current.getMonth()&&day.date.getFullYear() == current.getFullYear()" class="today" key="1">{{day.date.getDate()}}</span>
+            <span v-else class="number" key="2">{{day.date.getDate()}}</span>
             <span class="month">({{day.date.getMonth() + 1}}월)</span>
         </div>
         <div  class="list">
@@ -54,12 +54,17 @@
         padding:8px;
     }
     .today{
+        display: inline-block;
         font-size: 25px;
         padding: 2px 7px;
         font-weight: bold;
         color: rgb(157, 156, 236);
         border-radius: 10px;
         background-color: #fff;
+        animation: scale 1s infinite linear;
+    }
+    .today:hover{
+        animation: none;
     }
     .number {
         font-size:25px;
@@ -73,9 +78,9 @@
     }
    
     .item {
-        background-color: rgb(71, 51, 255);
+        background-color: rgb(92, 87, 145);
         color:#fff;
-        border-radius: 0.25rem;
+        border-radius: 0.3rem;
         padding:0.2rem 0.25rem;
         margin:4px;
         transition: all 5s;
@@ -85,7 +90,7 @@
         overflow: hidden;
     }
     .list:hover{
-        animation: size 10s;
+        animation: size 20s;
     }
     @keyframes size{
         0%{
@@ -105,6 +110,17 @@
         opacity: 1;
     }
     .fade-enter-active,.fade-leave-active{
-        transition: all 5s;
+        transition: opacity 3s;
+
+    }
+  
+    @keyframes scale{
+        0%{
+            transform: scale(.8);
+         }
+        100% {
+        transform: scale(1.0);
+
+    }
     }
 </style>
